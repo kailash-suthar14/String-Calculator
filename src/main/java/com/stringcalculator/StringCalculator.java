@@ -19,10 +19,19 @@ public class StringCalculator {
 			if (numbers.isEmpty()) {
 				return 0;
 			}
-			
-			// Split the string by commas or new lines
-			String[] numbersArray = numbers.split("[,\n]");
-			int sumOfNumbers = 0;
+			 String delimiter = "[,\n]"; // Default delimiters
+		     String numPart = numbers;   // The part containing the numbers
+
+			 // Check for custom delimiter
+	        if (numbers.startsWith("//")) {
+	            int delimiterIndex = numbers.indexOf("\n");
+	            delimiter = numbers.substring(2, delimiterIndex);  // Extract custom delimiter
+	            numPart = numbers.substring(delimiterIndex + 1);   // Extract the part after the custom delimiter
+	        }
+
+	        // Split the numbers by the determined delimiter
+	        String[] numbersArray = numPart.split(delimiter);
+	        int sumOfNumbers = 0;
 			
 			// Loop through each number, trim whitespace, and add to sum
 			for (String number : numbersArray) {

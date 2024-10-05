@@ -58,4 +58,11 @@ public class StringCalculatorTest {
 	    assertEquals(6, stringCalculator.add("1\n2,3"));
 	}
 	
+	/*
+	 * Test the add method with a string containing different delimiters example : //;\n1;2
+	 */	
+	@Test
+	public void testCustomDelimiter() {
+	    assertEquals(3, stringCalculator.add("//;\n1;2"));
+	}
 }
