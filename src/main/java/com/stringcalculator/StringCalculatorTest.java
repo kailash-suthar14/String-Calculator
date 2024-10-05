@@ -49,5 +49,13 @@ public class StringCalculatorTest {
 	    assertEquals(14, stringCalculator.add("1,5,8"));
 	}
 
+	/*
+	 * Test the add method with a string containing numbers separated by new lines
+	 * and commas
+	 */	
+	@Test
+	public void testNewLineBetweenNumbersReturnsTheirSum() {
+	    assertEquals(6, stringCalculator.add("1\n2,3"));
+	}
 	
 }
