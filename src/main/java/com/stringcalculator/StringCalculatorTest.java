@@ -1,5 +1,6 @@
 package com.stringcalculator;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -64,5 +65,19 @@ public class StringCalculatorTest {
 	@Test
 	public void testCustomDelimiter() {
 	    assertEquals(3, stringCalculator.add("//;\n1;2"));
+	}
+	
+	/*
+	 * Test for negative numbers and if negative numbers are present then throw the exception
+	 */
+	@Test
+	public void testNegativeNumbersThrowsException() {
+	    // Use assertThrows to check if an exception is thrown
+	    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+	    	stringCalculator.add("1,-2,3,-4");
+	    });
+
+	    // Check the exception message contains the negative numbers
+	    assertEquals("negative numbers not allowed: [-2, -4]", exception.getMessage());
 	}
 }

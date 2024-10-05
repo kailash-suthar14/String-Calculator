@@ -1,5 +1,7 @@
 package com.stringcalculator;
 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The StringCalculator class provides a method to add numbers from a
@@ -33,10 +35,24 @@ public class StringCalculator {
 	        String[] numbersArray = numPart.split(delimiter);
 	        int sumOfNumbers = 0;
 			
-			// Loop through each number, trim whitespace, and add to sum
-			for (String number : numbersArray) {
-				sumOfNumbers += Integer.parseInt(number.trim());//trim any trailing whitespace
-			}
+	        List<Integer> negativeNumbers = new ArrayList<>();  // List to store negative numbers
+
+	        // Loop through each number, trim whitespace, and add to sum, and throw exception for negative numbers
+	        for (String number : numbersArray) {
+	            int parsedNum = Integer.parseInt(number.trim());  // Parse and trim each number
+
+	            // Check for negative numbers
+	            if (parsedNum < 0) {
+	                negativeNumbers.add(parsedNum);
+	            }
+
+	            sumOfNumbers += parsedNum;
+	        }
+
+	        // If there are any negative numbers, throw an exception
+	        if (!negativeNumbers.isEmpty()) {
+	            throw new IllegalArgumentException("negative numbers not allowed: " + negativeNumbers);
+	        }
 			return sumOfNumbers; // Return the total sum of the numbers
 		}
 
