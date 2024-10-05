@@ -31,6 +31,23 @@ public class StringCalculatorTest {
 	    assertEquals(1, stringCalculator.add("1"));
 	}
 
-	
+	/**
+	 * Tests that the add method correctly returns the sum of two comma-separated numbers.
+	 * Specifically, this test checks if the input "1,2" correctly returns the sum 3.
+	 */
+	@Test
+	public void testTwoNumbersReturnsTheirSum() {
+	    assertEquals(6, stringCalculator.add("1,5"));
+	}
+
+	/**
+	 * Tests that the add method correctly returns the sum of two comma-separated numbers.
+	 * Specifically, this test checks if the input "1,5,8" correctly returns the sum 14.
+	 */
+	@Test
+	public void testThreeNumbersReturnsTheirSum() {
+	    assertEquals(14, stringCalculator.add("1,5,8"));
+	}
+
 	
 }
