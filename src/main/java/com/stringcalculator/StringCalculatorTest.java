@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 public class StringCalculatorTest {
 
+	StringCalculator stringCalculator = new StringCalculator();
+	
 	/**
 	 * This test checks that when an empty string is passed to the add() 
 	 * method of the StringCalculator class, it correctly returns 0.
@@ -14,7 +16,6 @@ public class StringCalculatorTest {
 	 */
 	@Test
 	public void testEmptyString() {
-		StringCalculator stringCalculator = new StringCalculator();
 		assertEquals(0,stringCalculator.add(""));
 	}
 	
@@ -27,7 +28,6 @@ public class StringCalculatorTest {
 	 */
 	@Test
 	public void testSingleNumberReturnsTheNumber() {
-	    StringCalculator stringCalculator = new StringCalculator();
 	    assertEquals(1, stringCalculator.add("1"));
 	}
 
