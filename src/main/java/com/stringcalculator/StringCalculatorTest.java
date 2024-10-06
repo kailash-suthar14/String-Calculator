@@ -86,7 +86,12 @@ public class StringCalculatorTest {
 	 */
 	@Test
 	public void testIgnoreNumbersGreaterThan1000() {
-	    StringCalculator calculator = new StringCalculator();
-	    assertEquals(2, calculator.add("2,1001"));
+	    assertEquals(2, stringCalculator.add("2,1001"));
+	}
+	
+	@Test
+	public void testCustomDelimiterOfAnyLength() {
+	    // The delimiter "***" is used to separate the numbers, so "1***2***3" should return 6
+	    assertEquals(6, stringCalculator.add("//[***]\n1***2***3"));
 	}
 }
