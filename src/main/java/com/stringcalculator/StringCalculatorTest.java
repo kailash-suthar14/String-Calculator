@@ -94,4 +94,16 @@ public class StringCalculatorTest {
 	    // The delimiter "***" is used to separate the numbers, so "1***2***3" should return 6
 	    assertEquals(6, stringCalculator.add("//[***]\n1***2***3"));
 	}
+	
+	@Test
+	public void testMultipleDelimiters() {
+	    // The delimiters "*" and "%" are used to separate the numbers, so "1*2%3" should return 6
+	    assertEquals(6, stringCalculator.add("//[*][%]\n1*2%3"));
+	}
+	
+	@Test
+	public void testMultipleDelimitersWithDifferentLengths() {
+		assertEquals(6, stringCalculator.add("//[!][@]\n1!2@3"));
+	}
+
 }
