@@ -80,4 +80,13 @@ public class StringCalculatorTest {
 	    // Check the exception message contains the negative numbers
 	    assertEquals("negative numbers not allowed: [-2, -4]", exception.getMessage());
 	}
+	
+	/*
+	 * Numbers greater than 1000 should be ignored, so "2,1001" should return 2
+	 */
+	@Test
+	public void testIgnoreNumbersGreaterThan1000() {
+	    StringCalculator calculator = new StringCalculator();
+	    assertEquals(2, calculator.add("2,1001"));
+	}
 }

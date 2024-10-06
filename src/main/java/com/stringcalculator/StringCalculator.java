@@ -46,7 +46,10 @@ public class StringCalculator {
 	                negativeNumbers.add(parsedNum);
 	            }
 
-	            sumOfNumbers += parsedNum;
+	            // Ignore numbers greater than 1000
+	            if (parsedNum <= 1000) {
+	            	sumOfNumbers += parsedNum;
+	            }
 	        }
 
 	        // If there are any negative numbers, throw an exception
