@@ -13,60 +13,78 @@ import java.util.regex.Pattern;
  */
 public class StringCalculator {
 
-	  /**
-     * Adds numbers from a string with custom or default delimiters.
-     * Supports multiple custom delimiters of any length.
-     * Numbers larger than 1000 are ignored.
-     * Throws an exception if any negative numbers are found.
-   
-     * @param numbers a string containing numbers separated by commas or new line(e.g., "1,\n2,3")
-     * @return the sum of the numbers in the string, or 0 if the string is empty
-     * @throws IllegalArgumentException if the string contains negative numbers
-     */
+	/**
+	 * Adds numbers from a string with custom or default delimiters. 
+	 * Supports multiple custom delimiters of any length. Numbers larger than 1000 are ignored.
+	 * Throws an exception if any negative numbers are found.
+	 * 
+	 * @param numbers a string containing numbers separated by commas or newline(e.g., "1,\n2,3")
+	 * @return the sum of the numbers in the string, or 0 if the string is empty
+	 * @throws IllegalArgumentException if the string contains negative numbers
+	 */
 	public int add(String numbers) {
-	    if (numbers.isEmpty()) {
-	        return 0;
-	    }
+		if (numbers.isEmpty()) {
+			return 0;
+		}
 
-	    // Check for custom delimiter header and strip it (but ignore delimiters)
-	    if (numbers.startsWith("//")) {
-	        int newlineIndex = numbers.indexOf("\n");
-	        numbers = numbers.substring(newlineIndex + 1);  // Ignore the delimiters part and get numbers
-	    }
+		// Define default delimiter for commas and newlines
+		String delimiter = "[,\n]";
+		String numPart = numbers; // Part of the string that contains the numbers
 
-	    // Remove all non-numeric characters but keep negative sign and digits
-	    String sanitizedNumbers = numbers.replaceAll("[^\\d-]+", " "); // Replace any non-digit with space
+		// Check if a custom delimiter is specified
+		if (numbers.startsWith("//")) {
+			int newlineIndex = numbers.indexOf("\n");
+			String delimiterPart = numbers.substring(2, newlineIndex);
+			numPart = numbers.substring(newlineIndex + 1);
 
-	    String[] numbersArray = sanitizedNumbers.trim().split("\\s+");  // Split by whitespace
-	    int sumOfNumbers = 0;
+			// Handle multiple delimiters in the format //[delim1][delim2]...
+			Matcher matcher = Pattern.compile("\\[(.*?)\\]").matcher(delimiterPart);
+			StringBuilder delimiterRegex = new StringBuilder();
+			while (matcher.find()) {
+				if (delimiterRegex.length() > 0) {
+					delimiterRegex.append("|");
+				}
+				delimiterRegex.append(Pattern.quote(matcher.group(1)));
+			}
 
-	    List<Integer> negativeNumbers = new ArrayList<>();  // List to store negative numbers
+			// If there are no delimiters in square brackets, it's a single character
+			// delimiter
+			if (delimiterRegex.length() == 0) {
+				delimiter = Pattern.quote(delimiterPart);
+			} else {
+				delimiter = delimiterRegex.toString();
+			}
+		}
 
-	    // Loop through each number and sum them up
-	    for (String numStr : numbersArray) {
-	        if (numStr.isEmpty()) {
-	            continue;
-	        }
+		// Split the string by the given delimiter(s)
+		String[] numberArray = numPart.split(delimiter);
+		int sum = 0;
+		List<Integer> negativeNumbers = new ArrayList<>();
 
-	        int parsedNum = Integer.parseInt(numStr);
+		// Iterate through the split string and sum up the numbers
+		for (String num : numberArray) {
+			if (num.trim().isEmpty()) {
+				continue;
+			}
 
-	        // Check for negative numbers
-	        if (parsedNum < 0) {
-	            negativeNumbers.add(parsedNum);
-	        }
+			int parsedNum = Integer.parseInt(num.trim());
 
-	        // Ignore numbers greater than 1000
-	        if (parsedNum <= 1000) {
-	            sumOfNumbers += parsedNum;
-	        }
-	    }
+			// Check for negative numbers and store them
+			if (parsedNum < 0) {
+				negativeNumbers.add(parsedNum);
+			}
 
-	    // If there are any negative numbers, throw an exception
-	    if (!negativeNumbers.isEmpty()) {
-	        throw new IllegalArgumentException("negative numbers not allowed: " + negativeNumbers);
-	    }
+			// Ignore numbers greater than 1000
+			if (parsedNum <= 1000) {
+				sum += parsedNum;
+			}
+		}
 
-	    return sumOfNumbers;
+		// If there are any negative numbers, throw an exception
+		if (!negativeNumbers.isEmpty()) {
+			throw new IllegalArgumentException("negative numbers not allowed: " + negativeNumbers);
+		}
+
+		return sum;
 	}
-
 }

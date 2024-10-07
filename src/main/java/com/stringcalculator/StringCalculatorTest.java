@@ -105,5 +105,10 @@ public class StringCalculatorTest {
 	public void testMultipleDelimitersWithDifferentLengths() {
 		assertEquals(6, stringCalculator.add("//[!][@]\n1!2@3"));
 	}
-
+	
+	@Test
+	public void testWithoutSquareBrackets() {
+		assertEquals(6, stringCalculator.add("//#\n1#2#3"));
+	}
+	
 }
